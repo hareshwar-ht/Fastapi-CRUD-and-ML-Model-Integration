@@ -31,13 +31,13 @@
     },
     "P004": {
         "name": "Arjun Verma",
-        "city": "Bangalore",
-        "age": 40,
         "gender": "male",
-        "height": 1.8,
-        "weight": 95,
-        "bmi": 29.32,
-        "verdict": "Overweight"
+        "age": 40,
+        "city": "mumbai",
+        "height": 0.5,
+        "weight": 95.0,
+        "bmi": 380.0,
+        "verdict": "Obesity"
     },
     "P005": {
         "name": "Neha Sinha",
@@ -48,5 +48,15 @@
         "weight": 75,
         "bmi": 31.22,
         "verdict": "Obese"
+    },
+    "P0010": {
+        "name": "John Wick",
+        "gender": "male",
+        "age": 39,
+        "city": "New York",
+        "height": 1.755,
+        "weight": 50.0,
+        "bmi": 16.23,
+        "verdict": "Underweight"
     }
 }
