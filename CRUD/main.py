@@ -40,9 +40,7 @@ def view_all_patients():
 
 
 @app.get("/view-patient/{patient_id}")  # route to view a specific patient by ID
-def view_patient(
-    patient_id: str = Path(..., description="ID of patient", example="P001")
-):
+def view_patient(patient_id: str = Path(..., description="ID of patient")):
     data = load_data()
     if patient_id in data:
         return data[patient_id]
@@ -104,7 +102,7 @@ def add_patient(patient: PatientSchema):
 
 @app.put("/update-patient/{patient_id}")  # route to update an existing patient
 def update_patient(
-    patient_id: str = Path(..., description="ID of patient to update", example="P001"),
+    patient_id: str = Path(..., description="ID of patient to update"),
     patient_update: PatientUpdateSchema = ...,
 ):
     # Load existing data
@@ -144,9 +142,7 @@ def update_patient(
 
 
 @app.delete("/delete-patient/{patient_id}")  # route to delete a patient
-def delete_patient(
-    patient_id: str = Path(..., description="ID of patient to delete", example="P001")
-):
+def delete_patient(patient_id: str = Path(..., description="ID of patient to delete")):
 
     # Load existing data
     data = load_data()
@@ -171,4 +167,4 @@ def delete_patient(
 if __name__ == "__main__":
     import uvicorn
 
-    uvicorn.run(app, host="0.0.0.0", port=8000)
+    uvicorn.run(app, port=8000)
