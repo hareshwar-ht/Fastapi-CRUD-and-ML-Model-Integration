@@ -1,5 +1,6 @@
-from pydantic import BaseModel, Field, computed_field
-from typing import Literal, Annotated
+from pydantic import BaseModel, Field, computed_field, field_validator
+from typing import Literal, Annotated, Dict
+from config import tier_1_Cities, tier_2_Cities
 
 
 class UserInputSchema(BaseModel):
@@ -29,10 +30,15 @@ class UserInputSchema(BaseModel):
             "Business",
             "Self-Employed",
             "Healthcare",
-            "Other",
         ],
         Field(..., description="Occupation of the user"),
     ]
+
+    @field_validator("city", mode="after")
+    @classmethod
+    def city_titleCase(cls, value: str) -> str:
+        value = value.strip().title()
+        return value
 
     @computed_field
     @property
@@ -69,30 +75,23 @@ class UserInputSchema(BaseModel):
     @property
     def city_tier(self) -> int:
         """Compute city tier based on city name"""
-        tier_1_Cities = [
-            "Mumbai",
-            "Bengaluru",
-            "Hyderabad",
-            "Kolkata",
-            "Pune",
-            "Ahmedabad",
-        ]
-        tier_2_Cities = [
-            "Jaipur",
-            "Delhi",
-            "Chennai",
-            "Chandigarh",
-            "Kochi",
-            "Coimbatore",
-            "Indore",
-            "Bhopal",
-            "Nagpur",
-            "Surat",
-        ]
-
         if self.city in tier_1_Cities:
             return 1
         elif self.city in tier_2_Cities:
             return 2
         else:
             return 3
+
+
+class ModelOutputSchema(BaseModel):
+
+    predicted_category: str = Field(
+        ..., description="The predicted insurance premium category"
+    )
+    confidence: float = Field(
+        ...,
+        description="Model's confidence score for the predicted category (range 0 to 1)",
+    )
+    class_probs: Dict[str, float] = Field(
+        ..., description="Probability distribution of all categories"
+    )

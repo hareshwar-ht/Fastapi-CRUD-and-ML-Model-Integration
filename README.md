@@ -36,14 +36,14 @@ Insurance category prediction API with machine learning.
 **Run:**
 
 ```bash
-cd ml_model_integration
-python main.py
+cd ml_model_integration/backend
+uvicorn main:app --reload --port 8005
 ```
 
 **Streamlit UI:**
 
 ```bash
-streamlit run ml_model_integration/frontend_streamlit.py
+streamlit run ml_model_integration/frontend/frontend_streamlit.py
 ```
 
 ## � Quick Start
@@ -51,9 +51,9 @@ streamlit run ml_model_integration/frontend_streamlit.py
 1. **Setup**
 
    ```bash
-   python -m venv myenv
+   uv venv myenv
    source myenv/bin/activate  # Windows: myenv\Scripts\activate
-   pip install fastapi uvicorn pydantic pandas scikit-learn streamlit
+   uv pip install fastapi uvicorn pydantic pandas scikit-learn streamlit
    ```
 
 2. **Run** either project (see above)

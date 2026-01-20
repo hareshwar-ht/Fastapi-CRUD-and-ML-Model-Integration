@@ -1,0 +1,20 @@
+services:
+  backend:
+    build: ./backend
+    container_name: fastapi_backend
+    ports:
+      - "8005:8005"
+    restart: unless-stopped
+
+  frontend:
+    build: ./frontend
+    container_name: streamlit_frontend
+    ports:
+      - "8501:8501"
+    env_file:
+      - ./frontend/.env
+    environment:
+      - AI_URL=http://backend:8005
+    depends_on:
+      - backend
+    restart: unless-stopped

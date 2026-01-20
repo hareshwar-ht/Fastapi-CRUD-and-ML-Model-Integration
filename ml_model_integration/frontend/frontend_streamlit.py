@@ -1,7 +1,19 @@
 import streamlit as st
 import requests
+import os
+from dotenv import load_dotenv
 
-AI_URL = "http://localhost:8000/predict"
+# Load environment variables from .env file
+load_dotenv()
+
+
+# Use environment variable for the AI URL, fallback to localhost for local testing
+AI_URL = os.getenv("AI_URL", "http://backend:8005")
+
+if not AI_URL:
+    st.error("AI_URL environment variable is not set. Please check your .env file.")
+    st.stop()
+
 
 st.title("Insurance Premium Prediction")
 
@@ -24,7 +36,6 @@ occupation = st.selectbox(
         "Business",
         "Self-Employed",
         "Healthcare",
-        "Other",
     ],
 )
 
@@ -40,7 +51,7 @@ if st.button("Submit"):
     }
 
     try:
-        response = requests.post(AI_URL, json=input_data)
+        response = requests.post(f"{AI_URL}/predict", json=input_data)
         if response.status_code == 200:
             result = response.json()
             st.success(
